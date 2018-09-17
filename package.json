@@ -1,5 +1,5 @@
 {
-  "name": "node-js-getting-started",
+  "name": "node-js-testing",
   "version": "0.3.0",
   "description": "A sample Node.js app using Express 4",
   "engines": {
@@ -7,15 +7,22 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "node test.js"
+    "start": "nodemon app/server.js",
+    "test": "mocha ./test/*.js"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
     "ejs": "^2.5.6",
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "mongodb": "^3.1.6",
+    "mongoose": "^5.2.15",
+    "nodemon": "^1.18.4"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
     "request": "^2.81.0",
+    "sinon": "^6.3.3",
     "tape": "^4.7.0"
   },
   "repository": {
