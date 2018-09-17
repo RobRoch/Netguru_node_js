@@ -5,7 +5,7 @@
   "engines": {
     "node": "8.9.1"
   },
-  "main": "server.js",
+  "main": "app/server.js",
   "scripts": {
     "prod": "nodemon app/server.js",
     "start": "node app/server.js",
