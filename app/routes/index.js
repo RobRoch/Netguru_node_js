@@ -4,8 +4,6 @@ app.get('/', (req, res) => {
     res.render('pages/index');
 });
 
-
-
 app.use('/movies', require('./movies'));
 app.use('/comments', require('./comments'));
 

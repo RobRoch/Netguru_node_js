@@ -12,7 +12,7 @@ app.set('view engine', 'ejs')
    .use(express.static(path.join(__dirname, '../public')))
    .use(bodyParser.json({limit: '50mb'}))
    .use(bodyParser.urlencoded({limit: '50mb', extended: false}))
-   .use(router)
+   .use('/', router)
    .listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
 mongoose.connect('mongodb://Rob:nodetestmlab1@ds123012.mlab.com:23012/node_js_testing', {useNewUrlParser: true});
