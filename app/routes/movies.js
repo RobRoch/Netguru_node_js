@@ -1,20 +1,7 @@
 const app = module.exports = require('express')();
 const requestPromise = require('request-promise');
 const config = require('../../config');
-const movieAction = require('../actions/movies');
 const movieModel = require('../models/movies');
-
-const mongo = require('mongodb');
-
-app.get('/', (req, res) => {
-    //Get all data using mongoose schema, simply render.
-    movieModel.find({}, (err,data) => {
-        if(err) {
-            return res.send('No data received, error occured');
-        }
-        res.send('<pre>' + JSON.stringify(data, null, '  '));
-    })
-});
 
 app.post('/', (req,res) => {
     //Validate given title.
@@ -37,11 +24,19 @@ app.post('/', (req,res) => {
         let movie = new movieModel(jsonData);
         movie.save()
             .then(item =>{
-                res.send(jsonData);
+                res.send(item);
             }).catch(err => {
                 res.status(400).send("Unable to save to database");
+                console.log(err);
             });
     })
-
-    
 })
+
+app.get('/', (req, res) => {
+    //Get all data using mongoose schema, simply render all. 
+    movieModel.find({}, (err,data) => {
+        err ? 
+        res.send('No data received, error occured') : 
+        res.send('<pre>' + JSON.stringify(data, null, '  '));
+    })
+});

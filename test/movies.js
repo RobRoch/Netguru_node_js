@@ -1,47 +1,42 @@
-// const { spawn } = require('child_process');
-// const request = require('request');
-// const test = require('tape');
+const chai = require('chai');
+const expect = chai.expect;
+const request = require('supertest');
+const PORT = process.env.PORT || 5000;
+const HOST = `http://localhost:${PORT}`;
+// const movieModel = require('../app/models/movies');
 
-// // Start the app
-// const env = Object.assign({}, process.env, {PORT: 5000});
-// const child = spawn('node', ['index.js'], {env});
+describe('Movies', function() {
+    describe('POST', function() {
+        it('should get valid data and return 200 when saved to db', function(done){
+            request(HOST).post('/movies')
+                .send({title:'spiderman'})
+                .expect(200)
+                .end(function(err, res) {
+                    if (err) return done(err);
+                    done();
+                });
+        });
 
-// test('responds to requests', (t) => {
-//   t.plan(4);
-//   child.stdout.on('data', _ => {
-
-//     request('http://127.0.0.1:5000', (error, response, body) => {
-//       // stop the server
-//       child.kill();
-
-//       // No error
-//       t.false(error);
-//       // Successful response
-//       t.equal(response.statusCode, 200);
-//       // Assert content checks
-//       t.notEqual(body.indexOf("<title>Node.js Getting Started on Heroku</title>"), -1);
-//       t.notEqual(body.indexOf("Getting Started with Node on Heroku"), -1);
-//     });
-//   });
-// });
-// const assert = require('assert');
-// const mocha = require('mocha');
-// const chai = require('chai');
-
-// const chaiHttp = require('chai-http');
-// chai.use(chaiHttp);
-
-// let should = chai.should();
-
-describe('Movies', () => {
-    describe('POST', () => {
-        it('Should be valid');
-        it('Body should contain only movie title');
-        it('Should be validated');
-        it('Based on passed title, data should be fetched');
-        it('Movie details should be saved to database');
+        it('should get an error when invalid data' , function(done) {
+            request(HOST).post('/movies')
+                .send({abc:'test'})
+                .expect(500)
+                .end(function(err, res) {
+                    if (err) return done(err);
+                    done();
+                });
+        })
     })
-    describe('GET' , () => {
-        it('Response should include full movie object');
+    describe('GET' , function() {
+
+        it('should pass when get all movies', function(done) {
+            request(HOST).get('/movies')
+                .expect(200)
+                .end(function(err, res) {
+                    if (err) return done(err);
+                    done();
+                });
+        });
+
     })
 });
